@@ -229,7 +229,11 @@ def check_spelling(input_text_or_list: Union[str, List[str]], lang='en',
         tokens = [token.lower() for token in input_text_or_list if token is not None and len(token) > 0]
     misspelled = spelling_checker.unknown(tokens)
     for word in misspelled:
-        tokens[tokens.index(word)] = spelling_checker.correction(word)
+        idx_word = tokens.index(word)
+        corrected_word = spelling_checker.correction(word)
+        
+        if corrected_word is not None:
+            tokens[idx_word] = corrected_word
     return ' '.join(tokens).strip()
 
 
